@@ -118,7 +118,12 @@ evalCompOp op expr1 expr2 scope = do
   case (res1, res2) of
     (Integer val1, Integer val2) -> Right $ (Bool $ op val1 val2, scope)
     (Char c1, Char c2) -> Right $ (Bool $ op (toInteger . ord $ c1) (toInteger . ord $ c2), scope)
+    (List l1, List l2) -> evalListCompOp op l1 l2 scope
     _ -> Left "Can only compare two comparable types"
+
+evalListCompOp op l1 l2 scope
+  | (length l1) /= (length l2) =
+    Right $ (Bool False, scope)
 
 flipNumber expr scope errMsg = do
   (val, _) <- evaluate expr scope
@@ -167,5 +172,3 @@ evalListElemAccess name callArgs items scope
           Left $ "Index " ++ (show index) ++ " out of bound for " ++ name
         else
           Right $ (items !! fromInteger index, scope)
-
-  

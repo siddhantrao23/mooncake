@@ -58,6 +58,18 @@ spec = do
     testCorrectProgramm "3 /= 3" (Bool False)
     testCorrectProgramm "3 /= 2" (Bool True)
 
+    testCorrectProgramm "'a' == 'a'" (Bool True)
+    testCorrectProgramm "\"\" == \"\"" (Bool True)
+    testCorrectProgramm "[1, 2, 3] == [1, 2, 3]" (Bool True)
+    testCorrectProgramm "\"Hello\" == \"Hello\"" (Bool True)
+    testCorrectProgramm "True == True" (Bool True)
+
+    testCorrectProgramm "'a' == 'b'" (Bool False)
+    testCorrectProgramm "\" \" == \"\"" (Bool False)
+    testCorrectProgramm "\"Hi\" == \"Hello\"" (Bool False)
+    testCorrectProgramm "[1, 2, 3] == [1, 2, 3, 4]" (Bool False)
+    testCorrectProgramm "True == False" (Bool False)
+
   describe "more complex cases" $ do
     -- basic variable usage
     let vars = [r|
